@@ -1,4 +1,4 @@
-name: Build Debug APK
+name: Build APKs
 
 on:
   push:
@@ -14,9 +14,21 @@ permissions:
 
 jobs:
   build:
-    name: assembleDebug
+    name: ${{ matrix.label }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: Debug APK
+            task: assembleDebug
+            artifact: AeMusic-v0.1.0-preview-debug-apk
+            path: app/build/outputs/apk/debug/*.apk
+          - label: R8 Internal APK
+            task: assembleInternal
+            artifact: AeMusic-v0.1.0-preview-r8-internal-apk
+            path: app/build/outputs/apk/internal/*.apk
 
     steps:
       - name: Checkout source
@@ -34,14 +46,13 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build debug APK
-        run: ./gradlew --no-daemon --stacktrace assembleDebug
+      - name: Build ${{ matrix.label }}
+        run: ./gradlew --no-daemon --stacktrace ${{ matrix.task }}
 
-      - name: Upload debug APK
-        if: always()
+      - name: Upload ${{ matrix.label }}
         uses: actions/upload-artifact@v4
         with:
-          name: AeMusic-v0.1.0-preview-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.path }}
           if-no-files-found: error
           retention-days: 14

@@ -1,9 +1,11 @@
 # AeMusic (吟光音乐) — Preview
 
 <p align="center">
-  <strong>一款基于 Jetpack Compose 构建的现代化 Android 音乐播放器。</strong>
-  <br />
-  <em>A modern Android music player built with Jetpack Compose, Material 3, Media3, and customizable Liquid Glass visual effects.</em>
+  <strong>A modern Android music player built with Jetpack Compose, Material 3, Media3, and customizable Liquid Glass visual effects.</strong>
+</p>
+
+<p align="center">
+  <a href="README.zh-CN.md">简体中文</a>
 </p>
 
 <p align="center">
@@ -19,75 +21,71 @@
 ---
 
 > [!IMPORTANT]
-> **当前版本说明 (Status Note)**
+> **Project status**
 >
-> 本项目当前处于 **初代公开预览测试阶段 (Initial Public Preview / Beta)**。功能主要用于技术架构验证、UI 动效探索与开源社区交流。不同设备、系统版本及定制 ROM 上可能存在表现差异，第三方平台接口也可能随时发生变化。
->
-> *This repository is in its initial public preview / beta stage. APIs and third-party integrations may change or stop working without notice. Contributions and issue reports are welcome.*
+> AeMusic is currently in its **initial public preview / beta stage**. This release is intended for architecture validation, UI/interaction experimentation, and open-source community feedback. Behavior may vary across Android versions, devices, and vendor ROMs. Experimental third-party integrations may change or stop working without notice.
 
----
+## 🌟 Features
 
-## 🌟 核心特性 (Features)
+### 🎨 Material 3 and Liquid Glass
+- **Modern Android UI** built with Jetpack Compose and Material 3.
+- **Experimental Liquid Glass styling** with dynamic highlights, blur/refraction-like effects, and soft shadows.
+- **Dynamic Canvas** that derives background palettes from the current artwork and adapts to light, dark, and OLED-oriented themes.
+- **Motion-focused interactions** using Compose animations and spring transitions throughout the player, playlists, and bottom dock.
 
-### 1. 🎨 Material 3 与 Liquid Glass
-- **Material 3 / Android 原生设计语言**：以 Jetpack Compose 与 Material 3 为基础构建设计系统。
-- **Liquid Glass 视觉效果**：可在标准 Material 材质与实验性玻璃质感之间切换，包含动态高光、折射/模糊及柔和阴影效果。
-- **动态背景 (Dynamic Canvas)**：根据当前封面生成背景色板，并针对亮色、暗色及 OLED 模式调整表现。
-- **手势与过渡动画**：播放器、歌单与底部 Dock 使用 Compose 动画和弹簧过渡实现交互效果。
-
-### 2. 🎵 本地播放与实验性多源支持 (Local & Online Hybrid)
-- **本地音乐播放**：支持 Android / Media3 可解码的常见音频格式，并通过系统媒体库扫描本地音乐。
-- **实验性第三方来源**：
-  - **哔哩哔哩 (Bilibili)**：提供搜索、收藏夹导入及可用媒体流解析等实验性能力；实际音质与可用性取决于平台返回结果、账号状态及地区。
-  - **网易云音乐**：支持账号凭据接入、部分歌单/推荐能力及可用播放流解析；实际可用音质取决于平台、账号权限及接口状态。
-  - **酷我音乐**：提供实验性的搜索与可用播放地址解析。
-- **跨源队列**：本地与在线条目可以在同一播放队列中管理。
+### 🎵 Local playback and experimental multi-source support
+- **Local playback** for common audio formats supported by Android / Media3, with media-library scanning.
+- **Experimental third-party providers**:
+  - **Bilibili**: experimental search, favorites import, and playable media-stream resolution. Availability and quality depend on the platform response, account state, and region.
+  - **NetEase Cloud Music**: account credential integration, selected playlist/recommendation features, and playable stream resolution. Availability and quality depend on account permissions and platform behavior.
+  - **Kuwo Music**: experimental search and playable URL resolution.
+- **Cross-source queueing** for mixing local and online entries in one playback queue.
 
 > [!CAUTION]
-> 第三方 Provider 属于兼容性与技术研究功能，并非对应平台的官方客户端或官方 SDK 集成。使用者应遵守所在地法律以及相应第三方服务的服务条款、版权规则和账号使用规则。
+> Third-party providers are compatibility and technical-research features. They are not official clients or official SDK integrations for the corresponding services. Users are responsible for complying with applicable law and the relevant service terms, copyright rules, and account policies.
 
-### 3. 📜 多源歌词 (Synchronized Lyrics)
-- 支持从网易云音乐、LRCLIB 等来源获取可用歌词数据。
-- 提供歌词匹配、逐句高亮、滚动和点击 Seek 等能力。
+### 📜 Synchronized lyrics
+- Retrieves available lyrics from sources such as NetEase Cloud Music and LRCLIB.
+- Supports matching, line highlighting, scrolling, and tap-to-seek behavior.
 
-### 4. ☁️ 私有云与自建媒体服务 (Cloud & Self-hosted)
-- **WebDAV**：可连接兼容 WebDAV 的个人存储服务，用于应用支持的数据同步场景。
-- **Navidrome / Subsonic**：支持连接用户自行部署或有权访问的兼容服务。
+### ☁️ Private cloud and self-hosted media
+- **WebDAV** connectivity for supported personal storage and synchronization scenarios.
+- **Navidrome / Subsonic-compatible services** for servers you operate or are authorized to access.
 
-### 5. 🔐 隐私与凭据保护 (Security & Privacy)
-- **本地加密存储**：Provider Cookie / Token 以及云服务密码等敏感值使用由 Android Keystore 管理的不可导出 AES-GCM 密钥进行本地加密。实际硬件安全级别取决于设备实现与系统能力。
-- **无 AeMusic 中转服务器**：项目本身不运营媒体代理、媒体中转或账号凭据收集服务器。为完成用户主动发起的登录、同步、搜索与播放请求，客户端会直接与相应第三方服务或用户配置的服务器通信。
-- **本地播放缓存**：Media3 播放链路可能在设备的应用缓存目录保存有容量限制的临时媒体缓存，用于改善连续播放体验；项目不提供由维护者运营的服务器端媒体存储或中继服务。
+### 🔐 Security and privacy
+- **Encrypted local credential storage**: persisted provider cookies/tokens and supported cloud-service passwords are encrypted using AES-GCM with a non-exportable key managed by Android Keystore. Actual hardware-backed protection depends on the device and Android implementation.
+- **No AeMusic relay backend**: the project does not operate a media proxy, media relay, or credential-collection server. User-initiated login, sync, search, and playback requests are made directly to the corresponding service or user-configured server.
+- **Local playback cache**: Media3 may keep size-limited temporary media cache files inside the app's local cache directory to improve playback continuity. This is not server-side media hosting operated by the AeMusic maintainers.
 
 ---
 
-## 🏗️ 架构概览 (Architecture)
+## 🏗️ Architecture
 
-项目当前采用单 `:app` 模块，并按功能与基础设施拆分：
+AeMusic currently uses a single `:app` module organized by feature and infrastructure responsibility:
 
 ```text
 app/src/main/java/com/aemusic/
-├── app/                   # Application / AppContainer 等应用级装配
+├── app/                   # Application / AppContainer and app-level wiring
 ├── core/
-│   ├── backup/            # 设置备份相关逻辑
-│   ├── cloud/             # WebDAV / Navidrome 等云连接
-│   ├── data/              # Repository、Store 与业务数据访问
-│   ├── database/          # Room 数据库实体、DAO 与迁移
-│   ├── diagnostics/       # 诊断事件与日志辅助
-│   ├── model/             # Track、PlaybackReference、MusicSourceId 等领域模型
-│   └── network/           # OkHttp 网络访问与媒体探测
-├── design/                # Compose 组件、视觉效果、图标与主题
+│   ├── backup/            # Settings backup
+│   ├── cloud/             # WebDAV / Navidrome integrations
+│   ├── data/              # Repositories and stores
+│   ├── database/          # Room entities, DAOs, migrations
+│   ├── diagnostics/       # Diagnostic events and logging helpers
+│   ├── model/             # Domain models
+│   └── network/           # OkHttp access and media probing
+├── design/                # Compose components, visual effects, icons, theme
 ├── feature/               # home / library / player / playlist / search / settings / shell
-├── playback/              # Media3 / ExoPlayer 播放服务、连接与缓存偏好
+├── playback/              # Media3 service, PlaybackConnection, cache preferences
 └── provider/
-    ├── account/           # ProviderCredentialStore（Android Keystore + AES-GCM）
-    ├── bilibili/          # Bilibili Provider
-    ├── kuwo/              # Kuwo Provider
-    ├── lyrics/            # 多来源歌词聚合
-    └── netease/           # NetEase Provider
+    ├── account/           # ProviderCredentialStore (Android Keystore + AES-GCM)
+    ├── bilibili/          # Bilibili provider
+    ├── kuwo/              # Kuwo provider
+    ├── lyrics/            # Multi-source lyric aggregation
+    └── netease/           # NetEase provider
 ```
 
-Provider 的公共契约位于 `provider/ProviderContracts.kt`，当前主要包括：
+Provider contracts live in `provider/ProviderContracts.kt`, including:
 
 - `MusicProvider`
 - `SearchProvider`
@@ -96,71 +94,79 @@ Provider 的公共契约位于 `provider/ProviderContracts.kt`，当前主要包
 - `ProviderRegistry`
 - `PlaybackResolver`
 
-更详细的二次开发说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+See [CONTRIBUTING.md](CONTRIBUTING.md) for implementation and contribution details.
 
 ---
 
-## 🚀 快速开始与构建指南 (Build Guide)
+## 🚀 Building
 
-### 环境要求
-- **JDK**：17 或更高版本
-- **Android SDK**：compileSdk / targetSdk 37，minSdk 26
-- **Gradle**：建议直接使用仓库内置 Gradle Wrapper
+### Requirements
+- **JDK:** 17 or newer
+- **Android SDK:** compileSdk / targetSdk 37, minSdk 26
+- **Gradle:** use the included Gradle Wrapper
 
-### 编译步骤
+### Local builds
 
 ```bash
-# 1. 克隆代码仓库
-git clone <repository-url>
-cd aemusic
+git clone https://github.com/w0nderful666/AeMusic.git
+cd AeMusic
 
-# 2. 运行单元测试
+# Unit tests
 ./gradlew testDebugUnitTest
 
-# 3. 构建 Debug 包
+# Development build
 ./gradlew assembleDebug
 
-# 4. 构建 Internal 包（Release 配置 + debug signing）
+# Release-like preview build:
+# R8 minification + optimization + resource shrinking + debug signing
 ./gradlew assembleInternal
 ```
 
-> [!NOTE]
-> **关于签名密钥 (About Signing Keys)**
->
-> - 本仓库不包含任何私有生产签名文件（`.keystore` / `.jks` 等）。
-> - `debug` 与 `internal` 构建均可使用本机 Android debug signing 配置，不需要项目维护者的生产密钥。
-> - 如需发布自己的正式构建，请自行生成并妥善保管 Release signing key，且不要提交到仓库。
+Typical output paths:
 
-常见产物路径：
 - Debug APK: `app/build/outputs/apk/debug/app-debug.apk`
-- Internal APK: `app/build/outputs/apk/internal/app-internal.apk`
+- R8 Internal APK: `app/build/outputs/apk/internal/app-internal.apk`
+
+### GitHub Actions builds
+
+Every push to `main`, every pull request targeting `main`, and manual workflow dispatch builds two APK variants:
+
+| Variant | R8 / minification | Resource shrinking | Signing | Intended use |
+| --- | --- | --- | --- | --- |
+| Debug | No | No | Android debug key | Development and diagnostics |
+| Internal | **Yes** | **Yes** | Android debug key | Performance testing and preview distribution |
+
+The Internal variant inherits the Release build configuration, including `proguard-android-optimize.txt`, but uses a debug signing key so the public repository does not need a production signing secret.
+
+> [!NOTE]
+> This repository does not contain production signing keys. If you publish your own production release, generate and protect your own release signing key and never commit it to the repository.
 
 ---
 
-## 🤝 二次开发与贡献 (Contributing)
+## 🤝 Contributing
 
-欢迎提交 Issue 和 Pull Request。新增或修改第三方 Provider 前，请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 中的接口、安全与合规要求。
+Issues and pull requests are welcome. Before adding or modifying a third-party provider, read [CONTRIBUTING.md](CONTRIBUTING.md) for provider contracts, credential-handling requirements, and integration boundaries.
 
-如发现可能影响用户凭据、账号安全或远程内容加载的安全问题，请优先阅读 [SECURITY.md](SECURITY.md)，避免在公开 Issue 中直接粘贴真实 Cookie、Token、密码或可利用细节。
-
----
-
-## ⚠️ 免责声明 (Legal Disclaimer)
-
-**在编译、使用、修改或分发本项目之前，请阅读完整的 [DISCLAIMER.md](DISCLAIMER.md)。**
-
-简要说明：
-
-1. **独立开源项目**：AeMusic 与网易、哔哩哔哩、酷我等第三方服务提供方不存在隶属、授权、赞助或背书关系。
-2. **版权归权利人所有**：通过第三方服务访问的音频、视频、歌词、封面和元数据，其相关权利归对应权利人及服务提供方所有。
-3. **无维护者媒体中转服务**：AeMusic 维护者不运营媒体代理或中转服务器；客户端可能在用户设备本地使用临时播放缓存。
-4. **第三方服务规则**：实验性 Provider 可能使用第三方 Web/客户端接口或兼容性实现，接口可能变化、限制或失效。使用者及二次开发者应自行确认其使用方式符合适用法律及服务条款。
-5. **权利通知**：权利人或平台运营方如认为仓库中的代码、文档或其他材料侵犯其合法权益，可通过仓库提供的联系渠道提交说明，维护者将对具体问题进行核验并采取适当措施。
+For vulnerabilities that may affect credentials, account security, or remote content loading, read [SECURITY.md](SECURITY.md) first. Do not paste real cookies, tokens, passwords, or exploitable secrets into a public issue.
 
 ---
 
-## 📄 开源许可证 (License)
+## ⚠️ Legal disclaimer
 
-AeMusic 源代码按照 [Apache License 2.0](LICENSE) 提供。Apache-2.0 允许在遵守许可证条款和相关法律的前提下使用、修改和分发代码，包括商业场景；第三方平台内容、接口、商标及服务本身**不因本仓库采用 Apache-2.0 而获得授权**。
+Please read the full [DISCLAIMER.md](DISCLAIMER.md) before building, using, modifying, or distributing AeMusic.
 
-第三方库及其他材料仍分别受其各自许可证、服务条款或权利声明约束。
+In short:
+
+1. **Independent project:** AeMusic is not affiliated with, authorized by, sponsored by, or endorsed by NetEase, Bilibili, Kuwo, or other third-party service providers.
+2. **Third-party rights remain with their owners:** audio, video, lyrics, artwork, metadata, trademarks, and account entitlements remain subject to their respective rights holders and service providers.
+3. **No maintainer-operated media relay:** AeMusic maintainers do not operate a third-party media proxy or relay. The client may use temporary on-device playback caching.
+4. **Third-party service rules still apply:** experimental providers may rely on web/client-facing endpoints or compatibility implementations and may change, become restricted, or stop working.
+5. **Rights notices:** rights holders or platform operators may use the repository's available contact/security channels to identify specific repository materials they believe require review.
+
+---
+
+## 📄 License
+
+AeMusic-owned source code is provided under the [Apache License 2.0](LICENSE). Subject to that license and applicable law, the code may be used, modified, and redistributed, including in commercial contexts.
+
+Apache-2.0 does **not** grant rights to third-party music, video, lyrics, artwork, trademarks, account entitlements, APIs, or services. Third-party libraries and materials remain subject to their own licenses, terms, and rights notices.
