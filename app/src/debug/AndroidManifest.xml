@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <activity
+            android:name=".design.lab.DesignLabActivity"
+            android:exported="true"
+            android:label="@string/design_lab_app_name"
+            android:theme="@style/Theme.AeMusic" />
+    </application>
+</manifest>

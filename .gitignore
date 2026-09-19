@@ -1,0 +1,46 @@
+# Gradle
+.gradle/
+.kotlin/
+build/
+**/build/
+
+# Android local configuration and artifacts
+local.properties
+*.apk
+*.aab
+*.ap_
+*.dex
+*.hprof
+captures/
+.cxx/
+.externalNativeBuild/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Signing and secrets
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+keystore.properties
+secrets.properties
+*.properties.local
+.env
+.env.*
+!.env.example
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*~
+

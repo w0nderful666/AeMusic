@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <!-- The verified Kuwo desktop endpoints do not consistently support TLS. Scope
+         compatibility to these hosts instead of enabling cleartext app-wide. -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">kuwo.cn</domain>
+        <domain includeSubdomains="false">krcs.kugou.com</domain>
+        <domain includeSubdomains="false">lyrics.kugou.com</domain>
+    </domain-config>
+</network-security-config>
